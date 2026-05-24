@@ -43,7 +43,7 @@ export default async function DocumentDetail({ params }) {
             <h1 className="text-3xl font-bold text-slate-900">{doc.title}</h1>
             <p className="text-slate-600 mt-2 max-w-3xl">{doc.detailed_summary}</p>
           </div>
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <a 
               href={doc.url} 
               target="_blank" 

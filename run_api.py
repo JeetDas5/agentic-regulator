@@ -18,12 +18,13 @@ import uvicorn
 def main():
     host = os.getenv("API_HOST", "0.0.0.0")
     port = int(os.getenv("API_PORT", "8000"))
+    reload = os.getenv("API_RELOAD", "false").lower() == "true"
 
     uvicorn.run(
         "api.app:app",
         host=host,
         port=port,
-        reload=True,
+        reload=reload,
         log_level="info",
     )
 

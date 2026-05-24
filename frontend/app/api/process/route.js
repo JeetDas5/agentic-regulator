@@ -158,7 +158,8 @@ export async function POST(req) {
     parserFormData.append("files", file);
     parserFormData.append("section", "full");
 
-    const parserResponse = await fetch("http://localhost:8000/api/v1/parse", {
+    const pythonApiUrl = process.env.PYTHON_API_URL || "http://localhost:8000";
+    const parserResponse = await fetch(`${pythonApiUrl}/api/v1/parse`, {
       method: "POST",
       body: parserFormData,
     });
