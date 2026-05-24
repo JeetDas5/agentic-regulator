@@ -38,3 +38,5 @@ metadata.json
 tmp/
 temp/
 *.tmp
+
+/sample_response.json

@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model RegulatoryDocument {
+  id                    String   @id @default(uuid())
+  regulation_id         String   @unique
+  organization          String
+  url                   String
+  published_date        String
+  document_type         String
+  
+  title                 String
+  reference_number      String
+  category              String
+  language              String
+  pages                 Int
+  
+  short_summary         String
+  detailed_summary      String
+  
+  risk_severity         String
+  risk_priority_score   Int
+  risk_reasoning        String[]
+
+  compliance_requirements ComplianceRequirement[]
+  impacted_departments    ImpactedDepartment[]
+  maps                    MeasurableActionPoint[]
+  validation_rules        ValidationRule[]
+
+  processed_at            DateTime
+  llm_model               String
+  confidence_score        Float
+  human_review_required   Boolean
+
+  createdAt               DateTime @default(now())
+}
+
+model ComplianceRequirement {
+  id                    String   @id @default(uuid())
+  requirement_id        String
+  requirement           String
+  mandatory             Boolean
+  deadline              String
+  affected_entities     String[]
+
+  documentId            String
+  document              RegulatoryDocument @relation(fields: [documentId], references: [id])
+}
+
+model ImpactedDepartment {
+  id                    String   @id @default(uuid())
+  department            String
+  reason                String
+
+  documentId            String
+  document              RegulatoryDocument @relation(fields: [documentId], references: [id])
+}
+
+model MeasurableActionPoint {
+  id                    String   @id @default(uuid())
+  map_id                String
+  title                 String
+  description           String
+  department            String
+  priority              String
+  deadline              String
+  status                String
+  validation_method     String[]
+  required_evidence     String[]
+
+  documentId            String
+  document              RegulatoryDocument @relation(fields: [documentId], references: [id])
+}
+
+model ValidationRule {
+  id                    String   @id @default(uuid())
+  rule_id               String
+  rule                  String
+  validation_type       String
+  success_criteria      String
+
+  documentId            String
+  document              RegulatoryDocument @relation(fields: [documentId], references: [id])
+}
