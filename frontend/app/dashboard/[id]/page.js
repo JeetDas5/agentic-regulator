@@ -23,6 +23,8 @@ export default async function DocumentDetail({ params }) {
     notFound();
   }
 
+  const formattedUrl = doc.url ? (/^https?:\/\//i.test(doc.url) ? doc.url : `https://${doc.url}`) : "#";
+
   return (
     <div className="min-h-screen bg-slate-50 p-8">
       <div className="max-w-6xl mx-auto space-y-6">
@@ -45,7 +47,7 @@ export default async function DocumentDetail({ params }) {
           </div>
           <div className="shrink-0">
             <a 
-              href={doc.url} 
+              href={formattedUrl} 
               target="_blank" 
               rel="noreferrer"
               className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
